@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Server</title>
+</head>
+<body>
+    <h1>Acceso al Public Path 1</h1>
+
+    <script src="socket.io/socket.io.js"></script>
+
+    <script>
+        var socket = io();
+
+        socket.on('connect', function(){
+            console.log('Conectado al servidor');
+        });
+
+        socket.on('disconnect', function(){
+            console.log('Error con la comunicacion con el servidor');
+        });
+
+        // <!-- emitir un evento, simulando que un cliente enviara un mensaje mediante
+        //      sockets -->
+        socket.emit('mensaje', {user:'nombreUser'})
+
+        // <!-- escuchando un evento, simulando escuchar un evento emitido desde el servidor
+        //      mediante sockets --> 
+        socket.on('mensajeServer', function(payload){
+            console.log('escuchando mensaje desde el server', payload);
+        });
+
+        // <!-- escuchando un evento emitido desde el servidor
+        //      mediante sockets --> 
+        socket.on('new-message-event-server-ios', function(payload){
+            console.log('escuchando mensaje desde el server from ios', payload);
+        });
+    </script>
+</body>
+</html>
